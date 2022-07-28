@@ -6,7 +6,6 @@
 #include <gui/view_port.h>
 #include <gui/view.h>
 
-
 #define POWER_OFF_TIMEOUT 90
 
 void power_draw_battery_callback(Canvas* canvas, void* context) {
@@ -15,26 +14,14 @@ void power_draw_battery_callback(Canvas* canvas, void* context) {
     canvas_draw_icon(canvas, 0, 0, &I_Battery_26x8);
 
     if(power->info.gauge_is_ok) {
+        char batteryPercentile[6];
+        sprintf(batteryPercentile, "% 3d%%", power->info.charge);
+        canvas_set_font(canvas, FontBatteryPercent);
+        canvas_set_color(canvas, ColorBlack);
+        canvas_draw_box(canvas, 1, 1, 22, 6); //draw black box
+        canvas_set_color(canvas, ColorWhite);
+        canvas_draw_str_aligned(canvas, 21, 4, AlignRight, AlignCenter, batteryPercentile);
 
-        char batteryPercentile[5];
-        sprintf(batteryPercentile, "%d", power->info.charge);
-        strcat(batteryPercentile, "%");
-        if((power->displayBatteryPercentage == 2) &&
-           (power->state != PowerStateCharging)) { //if display battery percentage, inverted
-            canvas_set_font(canvas, FontBatteryPercent);
-            canvas_set_color(canvas, ColorBlack);
-            canvas_draw_box(canvas, 1, 1, 22, 6); //draw black box
-            canvas_set_color(canvas, ColorWhite);
-            canvas_draw_str_aligned(canvas, 12, 4, AlignCenter, AlignCenter, batteryPercentile);
-        }
-        else if((power->displayBatteryPercentage == 1) &&
-            (power->state != PowerStateCharging)) { //if display battery percentage
-            canvas_set_font(canvas, FontBatteryPercent);
-            canvas_set_color(canvas, ColorBlack);
-            canvas_draw_str_aligned(canvas, 12, 4, AlignCenter, AlignCenter, batteryPercentile);
-        } else {
-            canvas_draw_box(canvas, 2, 2, (power->info.charge + 4) / 5, 4);
-        }
         if(power->state == PowerStateCharging) {
             canvas_set_bitmap_mode(canvas, 1);
             canvas_set_color(canvas, ColorWhite);
