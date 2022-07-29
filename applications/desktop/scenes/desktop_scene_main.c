@@ -86,6 +86,11 @@ bool desktop_scene_main_on_event(void* context, SceneManagerEvent event) {
             consumed = true;
             break;
 
+        case DesktopMainEventLock:
+            desktop_lock(desktop);
+            consumed = true;
+            break;
+
         case DesktopMainEventOpenLockMenu:
             scene_manager_next_scene(desktop->scene_manager, DesktopSceneLockMenu);
             consumed = true;
