@@ -38,10 +38,10 @@ static void lock_menu_callback(void* context, uint8_t index) {
     DesktopLockMenuView* lock_menu = context;
     switch(index) {
     case 0: // lock
-        lock_menu->callback(DesktopLockMenuEventLock, lock_menu->context);
+        lock_menu->callback(DesktopLockMenuEventPinLock, lock_menu->context);
         break;
     case 1: // lock
-        lock_menu->callback(DesktopLockMenuEventPinLock, lock_menu->context);
+        lock_menu->callback(DesktopLockMenuEventLock, lock_menu->context);
         break;
     default: // wip message
         with_view_model(
@@ -54,7 +54,7 @@ static void lock_menu_callback(void* context, uint8_t index) {
 }
 
 void desktop_lock_menu_render(Canvas* canvas, void* model) {
-    const char* Lockmenu_Items[LOCK_MENU_ITEMS_NB] = {"Lock", "Lock with PIN", "DUMB mode"};
+    const char* Lockmenu_Items[LOCK_MENU_ITEMS_NB] = {"Lock with PIN", "Lock", "DUMB mode"};
 
     DesktopLockMenuViewModel* m = model;
     canvas_clear(canvas);
@@ -66,7 +66,7 @@ void desktop_lock_menu_render(Canvas* canvas, void* model) {
     for(uint8_t i = 0; i < LOCK_MENU_ITEMS_NB; ++i) {
         const char* str = Lockmenu_Items[i];
 
-        if(i == 1 && !m->pin_set) str = "Set PIN";
+        if(i == 0 && !m->pin_set) str = "Set PIN";
         if(m->hint_timeout && m->idx == 2 && m->idx == i) str = "Not implemented";
 
         if(str != NULL)
