@@ -47,7 +47,7 @@ static void bt_hid_mouse_draw_callback(Canvas* canvas, void* context) {
         canvas_draw_icon(canvas, 81, 9, &I_Pressed_Button_13x13);
         canvas_set_color(canvas, ColorWhite);
     }
-    canvas_draw_icon(canvas, 84, 10, &I_Pin_arrow_up7x9);
+    canvas_draw_icon(canvas, 84, 11, &I_Pin_arrow_up7x9);
     canvas_set_color(canvas, ColorBlack);
 
     // Down
