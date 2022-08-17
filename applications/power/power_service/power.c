@@ -14,14 +14,19 @@ void power_draw_battery_callback(Canvas* canvas, void* context) {
     canvas_draw_icon(canvas, 0, 0, &I_Battery_26x8);
 
     if(power->info.gauge_is_ok) {
-        char batteryPercentile[6];
-        sprintf(batteryPercentile, "% 3d%%", power->info.charge);
+        char batteryPercentile[5];
+#define length(x) (sizeof(x)/sizeof(x[0]))
+        snprintf(batteryPercentile, length(batteryPercentile), "%3u%%", power->info.charge);
+        if(power->state == PowerStateCharging) {
+            batteryPercentile[length(batteryPercentile) - 2] = '+';
+        }
         canvas_set_font(canvas, FontBatteryPercent);
         canvas_set_color(canvas, ColorBlack);
         canvas_draw_box(canvas, 1, 1, 22, 6); //draw black box
         canvas_set_color(canvas, ColorWhite);
         canvas_draw_str_aligned(canvas, 21, 4, AlignRight, AlignCenter, batteryPercentile);
 
+        /*
         if(power->state == PowerStateCharging) {
             canvas_set_bitmap_mode(canvas, 1);
             canvas_set_color(canvas, ColorWhite);
@@ -31,6 +36,7 @@ void power_draw_battery_callback(Canvas* canvas, void* context) {
             canvas_draw_icon(canvas, 8, -1, &I_Charging_lightning_9x10);
             canvas_set_bitmap_mode(canvas, 0);
         }
+        */
     } else {
         canvas_draw_box(canvas, 8, 3, 8, 2);
     }
