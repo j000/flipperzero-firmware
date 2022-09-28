@@ -7,6 +7,7 @@
 #include "../desktop_i.h"
 #include "../views/desktop_events.h"
 #include "../views/desktop_view_main.h"
+#include "../helpers/pin_lock.h"
 #include "desktop_scene.h"
 #include "desktop_scene_i.h"
 
@@ -87,6 +88,9 @@ bool desktop_scene_main_on_event(void* context, SceneManagerEvent event) {
             break;
 
         case DesktopMainEventLock:
+            if (desktop->settings.pin_code.length > 0) {
+                desktop_pin_lock(&desktop->settings);
+            }
             desktop_lock(desktop);
             consumed = true;
             break;
