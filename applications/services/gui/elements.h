@@ -90,7 +90,7 @@ void elements_button_center(Canvas* canvas, const char* str);
  *
  * @param   canvas                  Canvas instance
  * @param   x, y                    coordinates based on align param
- * @param   horizontal, vertical    aligment of multiline text
+ * @param   horizontal, vertical    alignment of multiline text
  * @param   text                    string (possible multiline)
  */
 void elements_multiline_text_aligned(
@@ -191,6 +191,25 @@ void elements_bubble_str(
  * @param   width   max width
  */
 void elements_string_fit_width(Canvas* canvas, FuriString* string, uint8_t width);
+
+/** Draw scrollable text line
+ *
+ * @param      canvas    The canvas
+ * @param[in]  x         X coordinate
+ * @param[in]  y         Y coordinate
+ * @param[in]  width     The width
+ * @param      string    The string
+ * @param[in]  scroll    The scroll counter: 0 - no scroll, any other number - scroll. Just count up, everything else will be calculated on the inside.
+ * @param[in]  ellipsis  The ellipsis flag: true to add ellipse
+ */
+void elements_scrollable_text_line(
+    Canvas* canvas,
+    uint8_t x,
+    uint8_t y,
+    uint8_t width,
+    FuriString* string,
+    size_t scroll,
+    bool ellipsis);
 
 /** Draw text box element
  *
